@@ -1,4 +1,4 @@
-ENV['RACK_ENV'] = 'test'
+ENV["RACK_ENV"] = 'test'
 
 require File.join(File.dirname(__FILE__), '..', './app/app.rb')
 
@@ -33,6 +33,11 @@ RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
+
+  DataMapper.setup(:default, "postgres://localhost/bookmark_manager_test")
+  DataMapper.finalize
+  DataMapper.auto_upgrade!
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
