@@ -32,15 +32,24 @@ feature 'Create a new bookmark' do
   end
 end
 
+
+
 # As a user
 # So that I can group my links
 # I want to be able to tag my links
 
+
 feature 'User can add tags' do
+  let(:link) {Link.first}
+
   scenario 'when adding a new bookmark' do
     create_bookmark_with_tag('Datamapper', 'datamapper.org', 'SQL')
-    link = Link.first
     expect(link.tags.map(&:name)).to include("SQL")
+  end
+
+  scenario 'when adding a new bookmark' do
+    create_bookmark_with_tag('Spotify', 'spotify.com', 'music, albums')
+    expect(link.tags.map(&:name)).to include("music", "albums")
   end
 end
 
@@ -48,7 +57,7 @@ end
 # So that I can quickly search for links by topic
 # I want to be able to filter by the tag
 
-feature 'To find links' do
+feature 'Viewing links' do
   scenario 'when searching by tag' do
     create_bookmark_with_tag('bubbles website', 'bubbles.com', 'bubbles')
     create_bookmark_with_tag('Facebook', 'facebook.com', 'social media')

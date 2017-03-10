@@ -7,6 +7,7 @@ gem 'dm-postgres-adapter'
 gem 'rspec'
 gem 'capybara'
 gem 'sinatra'
+gem 'rake'
 # gem 'rerun'
 
 group :test do
