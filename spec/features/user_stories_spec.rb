@@ -38,10 +38,22 @@ end
 
 feature 'User can add tags' do
   scenario 'when adding a new bookmark' do
-    create_bookmark
-    fill_in :tags, :with => "Data mapper"
-    click_button "Save Bookmark"
+    create_bookmark_with_tag('Datamapper', 'datamapper.org', 'SQL')
     link = Link.first
-    expect(link.tags.map(&:name)).to include("Data mapper")
+    expect(link.tags.map(&:name)).to include("SQL")
+  end
 end
+
+# As a user
+# So that I can quickly search for links by topic
+# I want to be able to filter by the tag
+
+feature 'To find links' do
+  scenario 'when searching by tag' do
+    create_bookmark_with_tag('bubbles website', 'bubbles.com', 'bubbles')
+    create_bookmark_with_tag('Facebook', 'facebook.com', 'social media')
+    visit '/tags/bubbles'
+    expect(page).to have_content 'bubbles.com'
+    expect(page).not_to have_content 'facebook.com'
+  end
 end
