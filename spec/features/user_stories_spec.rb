@@ -22,15 +22,26 @@ end
 
 feature 'Create a new bookmark' do
   scenario 'create a new bookmark with url and title' do
-    visit '/links/new'
-    fill_in :title, :with => "Getting started with DataMapper"
-    fill_in :url, :with => "http://datamapper.org/getting-started.html"
+    create_bookmark
     click_button "Save Bookmark"
-    
     expect(current_path).to eq '/links'
 
     within 'ul#links' do
       expect(page).to have_content 'Getting started with DataMapper'
     end
   end
+end
+
+# As a user
+# So that I can group my links
+# I want to be able to tag my links
+
+feature 'User can add tags' do
+  scenario 'when adding a new bookmark' do
+    create_bookmark
+    fill_in :tags, :with => "Data mapper"
+    click_button "Save Bookmark"
+    link = Link.first
+    expect(link.tags.map(&:name)).to include("Data mapper")
+end
 end
